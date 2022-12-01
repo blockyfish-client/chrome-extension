@@ -12,12 +12,8 @@
 	"permissions": ["webRequest", "https://deeeep.io/*", "https://beta.deeeep.io/*", "webRequestBlocking", "storage"],
 	"content_scripts": [
 		{
-			"js": ["scripts/content.js"],
+			"js": ["scripts/content.js", "scripts/loadbadges.js"],
 			"matches": ["https://deeeep.io/*", "https://beta.deeeep.io/*"]
-		},
-		{
-			"js": ["scripts/loadbadges.js"],
-			"matches": ["https://deeeep.io/u/*", "https://beta.deeeep.io/u/*"]
 		}
 	],
 	"background": {
