@@ -3,15 +3,8 @@ chrome.webRequest.onBeforeRequest.addListener(
 		console.log(info.url);
 		var redirectUrl = info.url;
 		if (/.+\/assets\/(?<filename>.+\.js)(?:\?.*)?$/.exec(redirectUrl)) {
-			newRedirectUrl = redirectUrl.replace(/.+\/\/(beta\.)?deeeep.io\/assets/, "https://blockyfish-client.github.io/Hacked-Doc-Assets/images/misc");
-
-			var xhr = new XMLHttpRequest();
-			xhr.open("HEAD", newRedirectUrl, false);
-			xhr.send();
-			if (!xhr.status == "404") {
-				redirectUrl = newRedirectUrl;
-			}
-			return { redirectUrl: redirectUrl };
+			newRedirectUrl = redirectUrl.replace(/.+\/\/(beta\.)?deeeep.io\/assets/, "https://hacked-doc-assets.netlify.app/images/misc");
+			return { redirectUrl: newRedirectUrl };
 		}
 	},
 	{
