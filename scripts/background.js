@@ -1,39 +1,38 @@
+const alreadyChecked = new Set();
 function genericHandler(redirectTemplate, regex, name, filenameKeys = ["filename"]) {
 	function handler(details) {
 		let redirectUrl = details.url;
 
-		if (options.redirectAssets) {
-			const m = regex.exec(details.url); // checks if might be valid X
+		const m = regex.exec(details.url); // checks if might be valid X
 
-			console.log(`original ${name} URL is ${details.url}`);
+		console.log(`original ${name} URL is ${details.url}`);
 
-			if (m) {
-				const filenameArray = filenameKeys.map((key) => m.groups[key] || "");
-				const filename = filenameArray.join("");
+		if (m) {
+			const filenameArray = filenameKeys.map((key) => m.groups[key] || "");
+			const filename = filenameArray.join("");
 
-				console.log(filename);
+			console.log(filename);
 
-				let newRedirectUrl = redirectTemplate + filename; // redirect it
+			let newRedirectUrl = redirectTemplate + filename; // redirect it
 
-				if (!alreadyChecked.has(newRedirectUrl)) {
-					let checkRequest = new XMLHttpRequest(); // creates HTTP request
+			if (!alreadyChecked.has(newRedirectUrl)) {
+				let checkRequest = new XMLHttpRequest(); // creates HTTP request
 
-					checkRequest.open("GET", newRedirectUrl, false); // sets up request
-					checkRequest.send(); // sends the request
+				checkRequest.open("GET", newRedirectUrl, false); // sets up request
+				checkRequest.send(); // sends the request
 
-					if (checkRequest.status >= 200 && checkRequest.status < 300) {
-						// redirect exists
-						redirectUrl = newRedirectUrl;
+				if (checkRequest.status >= 200 && checkRequest.status < 300) {
+					// redirect exists
+					redirectUrl = newRedirectUrl;
 
-						console.log(`Redirecting to ${newRedirectUrl}`);
-					} else {
-						tempMarkChecked(newRedirectUrl);
-
-						console.log(`${newRedirectUrl} does not exist. Using default.`);
-					}
+					console.log(`Redirecting to ${newRedirectUrl}`);
 				} else {
-					console.log(`Already checked ${newRedirectUrl}`);
+					tempMarkChecked(newRedirectUrl);
+
+					console.log(`${newRedirectUrl} does not exist. Using default.`);
 				}
+			} else {
+				console.log(`Already checked ${newRedirectUrl}`);
 			}
 		}
 
