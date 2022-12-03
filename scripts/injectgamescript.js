@@ -1,5 +1,6 @@
 const mapeditor = document.querySelector("#canvas-container > canvas");
 
+// EVO WHEEL
 var evo_wheel = document.createElement("div");
 var evo_wheel_rot = 0;
 setInterval(function () {
@@ -291,6 +292,7 @@ window.addEventListener("keyup", function (e) {
 	}
 });
 
+// AIM LOCK
 aimBotRan = document.getElementById("aimbotran_placeholder");
 aimBot = false;
 mouseX = 0;
@@ -370,6 +372,7 @@ if (!aimBotRan) {
 	}, 50);
 }
 
+// SPIIIIINNNNN.....!!!
 var spin_direction = 0;
 const spin_angle = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360];
 const spin_radius = 300;
@@ -399,10 +402,12 @@ setInterval(() => {
 	}
 }, 15);
 
+// NO INK/DARKNESS/FLASHBANG
 game.currentScene.toggleFlash = function () {};
 game.currentScene.terrainManager.shadow.setShadowSize(1000000);
 game.currentScene.terrainManager.shadow.setShadowSize = function () {};
 
+// NO INVISIBLE ANIMALS
 setInterval(function () {
 	for (let i = 0; i < game.currentScene.entityManager.animalsList.length; i++) {
 		if (game.currentScene.entityManager.animalsList[i].alpha < 0.5) {
@@ -420,6 +425,7 @@ setInterval(function () {
 	}
 });
 
+// UNLIMITED ZOOM
 setInterval(function () {
 	game.viewport.clampZoom({
 		minWidth: 0,
@@ -427,8 +433,10 @@ setInterval(function () {
 	});
 }, 200);
 
+// SHOW GHOSTS
 game.currentScene.viewingGhosts = true;
 
+// X-RAY
 game.currentScene.foodGlowContainer.zOrder = 996;
 game.currentScene.foodContainer.zOrder = 997;
 game.currentScene.namesLayer.zOrder = 998;
