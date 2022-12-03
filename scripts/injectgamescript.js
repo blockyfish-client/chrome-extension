@@ -291,11 +291,15 @@ window.addEventListener("keyup", function (e) {
 	}
 });
 
+aimBotRan = document.getElementById("aimbotran_placeholder");
 aimBot = false;
 mouseX = 0;
 mouseY = 0;
 whitelistedAimbotAnimalId = [18, 26, 29, 33, 44, 47, 52, 67, 77, 88];
 if (!aimBotRan) {
+	var placeholder = document.createElement("div");
+	placeholder.setAttribute("id", "aimbotran_placeholder");
+	document.body.appendChild(placeholder);
 	aimBotRan = true;
 	window.addEventListener("keyup", (e) => {
 		if (e.key.toLowerCase() == "a" && document.querySelector("#app > div.modals-container > div") == null && document.querySelector("#app > div.ui > div").style.display == "none" && document.activeElement.localName != "input") {
