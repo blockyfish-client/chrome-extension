@@ -1,6 +1,8 @@
 // LEAVE CONFIRMATION
-window.onbeforeunload = function (e) {
-	return "Do you want to exit this page?";
+window.onbeforeunload = function () {
+	if (document.contains(document.querySelector(".playing"))) {
+		return "Do you want to exit this page?";
+	}
 };
 
 const brand_css = document.createElement("style");
@@ -123,42 +125,44 @@ for (const evoClose of evoCloses) {
 }
 
 // BLOCKYFISH FEED
-const left_widget_container = document.querySelector("div.p-2.sidebar.left.space-y-2");
-left_widget_container.style.maxWidth = "30vw";
-left_widget_container.style.width = "21rem";
+if (window.innerWidth > 800) {
+	const left_widget_container = document.querySelector("div.p-2.sidebar.left.space-y-2");
+	left_widget_container.style.maxWidth = "30vw";
+	left_widget_container.style.width = "21rem";
 
-const tutorial_box = document.querySelector("div.p-2.sidebar.right.space-y-2 > div:nth-child(3)").cloneNode(true);
-left_widget_container.insertBefore(tutorial_box, left_widget_container.firstChild);
-document.querySelector("div.p-2.sidebar.left.space-y-2 > div > div.title").innerText = "How to play";
-document.querySelector("div.p-2.sidebar.left.space-y-2 > div > div:nth-child(2)").outerHTML = '<div id="tutorial"></div>';
-const tutorial = document.getElementById("tutorial");
-tutorial.style.maxHeight = "30vh";
-tutorial.style.overflow = "scroll";
-tutorial.style.overflowX = "hidden";
-tutorial.style.padding = "10px";
-tutorial.style.fontSize = "small";
+	const tutorial_box = document.querySelector("div.p-2.sidebar.right.space-y-2 > div:nth-child(3)").cloneNode(true);
+	left_widget_container.insertBefore(tutorial_box, left_widget_container.firstChild);
+	document.querySelector("div.p-2.sidebar.left.space-y-2 > div > div.title").innerText = "How to play";
+	document.querySelector("div.p-2.sidebar.left.space-y-2 > div > div:nth-child(2)").outerHTML = '<div id="tutorial"></div>';
+	const tutorial = document.getElementById("tutorial");
+	tutorial.style.maxHeight = "30vh";
+	tutorial.style.overflow = "scroll";
+	tutorial.style.overflowX = "hidden";
+	tutorial.style.padding = "10px";
+	tutorial.style.fontSize = "small";
 
-const news_feed_box = document.querySelector("div.p-2.sidebar.right.space-y-2 > div:nth-child(3)").cloneNode(true);
-left_widget_container.insertBefore(news_feed_box, left_widget_container.firstChild);
-document.querySelector("div.p-2.sidebar.left.space-y-2 > div > div.title").innerText = "Blockyfish News";
-document.querySelector("div.p-2.sidebar.left.space-y-2 > div > div:nth-child(2)").outerHTML = '<div id="blockyfish-news"></div>';
-const blockyfish_news = document.getElementById("blockyfish-news");
-blockyfish_news.style.maxHeight = "30vh";
-blockyfish_news.style.overflow = "scroll";
-blockyfish_news.style.overflowX = "hidden";
-blockyfish_news.style.padding = "10px";
-blockyfish_news.style.fontSize = "small";
+	const news_feed_box = document.querySelector("div.p-2.sidebar.right.space-y-2 > div:nth-child(3)").cloneNode(true);
+	left_widget_container.insertBefore(news_feed_box, left_widget_container.firstChild);
+	document.querySelector("div.p-2.sidebar.left.space-y-2 > div > div.title").innerText = "Blockyfish News";
+	document.querySelector("div.p-2.sidebar.left.space-y-2 > div > div:nth-child(2)").outerHTML = '<div id="blockyfish-news"></div>';
+	const blockyfish_news = document.getElementById("blockyfish-news");
+	blockyfish_news.style.maxHeight = "30vh";
+	blockyfish_news.style.overflow = "scroll";
+	blockyfish_news.style.overflowX = "hidden";
+	blockyfish_news.style.padding = "10px";
+	blockyfish_news.style.fontSize = "small";
 
-async function getBlockyfishTutorial() {
-	let tut = await (await fetch("https://blockyfish.netlify.app/blockyfishfeed/tutorial")).text();
-	tutorial.innerHTML = tut;
+	async function getBlockyfishTutorial() {
+		let tut = await (await fetch("https://blockyfish.netlify.app/blockyfishfeed/tutorial")).text();
+		tutorial.innerHTML = tut;
+	}
+	getBlockyfishTutorial();
+	async function getBlockyfishNews() {
+		let news = await (await fetch("https://blockyfish.netlify.app/blockyfishfeed/news")).text();
+		blockyfish_news.innerHTML = news;
+	}
+	getBlockyfishNews();
 }
-getBlockyfishTutorial();
-async function getBlockyfishNews() {
-	let news = await (await fetch("https://blockyfish.netlify.app/blockyfishfeed/news")).text();
-	blockyfish_news.innerHTML = news;
-}
-getBlockyfishNews();
 
 // ASSET SWAPPER MODAL (FOR IN-GAME)
 const aswp_style = document.createElement("style");
@@ -176,18 +180,6 @@ aswpBox.outerHTML = '<input id="aswp-input" style="padding: 5px;border-radius: 5
 const aswpCloses = document.getElementsByClassName("aswp-close");
 const aswpModal = document.getElementById("aswp-modal");
 aswpModal.classList.toggle("aswp-hidden");
-function toggleAswp() {
-	aswpModal.classList.toggle("aswp-hidden");
-	game.currentScene.myAnimal.setSkin(document.getElementById("aswp-input").value);
-}
-document.getElementById("aswp-input").addEventListener("input", () => {
-	game.currentScene.myAnimal.setSkin(document.getElementById("aswp-input").value);
-});
-for (const aswpClose of aswpCloses) {
-	aswpClose.addEventListener("click", () => {
-		toggleAswp();
-	});
-}
 
 // SOCIAL LINKS
 const discord_old_parent_clone = document.querySelector("#app > div.ui > div > div.el-row.header.justify-between.flex-nowrap > div:nth-child(2) > div > div:nth-child(5)").cloneNode(true);
@@ -251,4 +243,30 @@ document.querySelector("#app > div.ui > div > div.el-row.header.justify-between.
 	});
 });
 
+function injectScript(file, tag) {
+	var node = document.getElementsByTagName(tag)[0];
+	var script = document.createElement("script");
+	script.setAttribute("type", "text/javascript");
+	script.setAttribute("src", file);
+	node.appendChild(script);
+}
 
+// CHECK FOR GAME START
+let scriptExecuted = false;
+document.querySelector("button.play").addEventListener("click", () => {
+	if (!document.querySelector(".playing")) scriptExecuted = false;
+	if (scriptExecuted) return;
+	const openObserver = new MutationObserver(() => {
+		if (document.contains(document.querySelector(".playing"))) {
+			openObserver.disconnect();
+			scriptExecuted = true;
+			injectScript(chrome.runtime.getURL("scripts/injectgamescript.js"), "body");
+		}
+	});
+	openObserver.observe(document.getElementById("app"), {
+		attributes: false,
+		childList: true,
+		characterData: false,
+		subtree: true
+	});
+});
