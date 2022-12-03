@@ -5,6 +5,61 @@ window.onbeforeunload = function () {
 	}
 };
 
+// BLOCKS BROWSER KEYBOARD SHORTCUTS
+document.onkeydown = function (e) {
+	if ((e.ctrlKey || e.altKey) && !(e.ctrlKey && e.key == "Backspace") && !(e.ctrlKey && e.shiftKey && e.key.toLowerCase() == "i")) return false;
+};
+
+// DEVTOOLS WARNING
+var devToolsOpen = true;
+var oldDtState = false;
+var isMac = navigator.platform.toLowerCase().indexOf("mac") > -1,
+	openedRatio = isMac ? 1.6 : 1.5,
+	startedOpenedRatio = isMac ? 0.5 : 0.8,
+	firstTest,
+	inter;
+window.addEventListener("load", function () {
+	setTimeout(init, 1000);
+});
+function init() {
+	firstTest = testDevTools();
+	startCheck();
+}
+function testDevTools() {
+	var t = performance.now();
+	for (var i = 0; i < 100; i++) {
+		console.debug(1);
+	}
+	return performance.now() - t;
+}
+function startCheck() {
+	stopCheck();
+	inter = setInterval(function () {
+		var test = testDevTools(),
+			ratio = test / firstTest,
+			opened = ratio > openedRatio;
+		devToolsOpen = opened;
+		if (ratio < startedOpenedRatio) {
+			firstTest = test;
+		}
+		if (oldDtState != devToolsOpen) {
+			oldDtState = devToolsOpen;
+			if (devToolsOpen == true) {
+				big_style = ["color: #ef7c8e", "-webkit-text-stroke: 1px black", "font-size: 75px", "font-family: system-ui", "padding: 10px"].join(";");
+				console.log("%cStop!", big_style);
+				text_style = ["color: white", "font-size: 20px", "font-family: system-ui"].join(";");
+				console.log("%cThis is a browser feature intended for developers. If someone told you to copy and paste something here, there is a 420.69% chance that they are trying to hack your account.", text_style);
+				console.log("%cUnless you know EXACTLY what you're doing, please close DevTools", text_style);
+				note_style = ["color: #7ab5e6", "font-size: 10px", "font-family: system-ui"].join(";");
+				console.log("%cIf you know how to do trolling on Deeeep.io with Devtools, please join the Discord server listed at https://blockyfish.netlify.app and help me with the development of this browser extension.", note_style);
+			}
+		}
+	}, 1000);
+}
+function stopCheck() {
+	clearInterval(inter);
+}
+
 const brand_css = document.createElement("style");
 document.querySelector("head").appendChild(brand_css);
 brand_css.outerHTML = '<link rel="stylesheet" href="https://blockyfish.netlify.app/themes/branding.css">';
