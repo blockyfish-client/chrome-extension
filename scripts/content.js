@@ -7,7 +7,7 @@ window.onbeforeunload = function () {
 
 // BLOCKS BROWSER KEYBOARD SHORTCUTS
 document.onkeydown = function (e) {
-	if ((e.ctrlKey || e.altKey) && !(e.ctrlKey && e.key == "Backspace") && !(e.ctrlKey && e.shiftKey && e.key.toLowerCase() == "i")) return false;
+	if ((e.ctrlKey || e.altKey) && !(e.ctrlKey && e.key == "Backspace") && !(e.ctrlKey && e.shiftKey && (e.key.toLowerCase() == "i" || "c"))) return false;
 };
 
 // DEVTOOLS WARNING
