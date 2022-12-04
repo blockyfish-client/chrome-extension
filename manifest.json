@@ -13,7 +13,7 @@
 	"content_scripts": [
 		{
 			"js": ["scripts/content.js", "scripts/loadbadges.js"],
-			"matches": ["https://beta.deeeep.io/", "https://beta.deeeep.io/?host=*", "https://beta.deeeep.io/login?host=*", "https://beta.deeeep.io/login/?host=*", "https://beta.deeeep.io/forum/*", "https://beta.deeeep.io/u/*", "https://beta.deeeep.io/store/*", "https://beta.deeeep.io/inventory/*"]
+			"matches": ["https://beta.deeeep.io/", "https://beta.deeeep.io/?host=*", "https://beta.deeeep.io/login/*", "https://beta.deeeep.io/forum/*", "https://beta.deeeep.io/u/*", "https://beta.deeeep.io/store/*", "https://beta.deeeep.io/inventory/*"]
 		}
 	],
 	"background": {
