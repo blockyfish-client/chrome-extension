@@ -47,7 +47,7 @@ function startCheck() {
 			if (devToolsOpen == true) {
 				big_style = ["color: #ef7c8e", "-webkit-text-stroke: 1px black", "font-size: 75px", "font-family: system-ui", "padding: 10px"].join(";");
 				console.log("%cStop!", big_style);
-				text_style = ["color: #888888", "font-size: 20px", "font-family: system-ui"].join(";");
+				text_style = ["font-size: 20px", "font-family: system-ui"].join(";");
 				console.log("%cThis is a browser feature intended for developers. If someone told you to copy and paste something here, there is a 420.69% chance that they are trying to hack your account.", text_style);
 				console.log("%cUnless you know EXACTLY what you're doing, please close DevTools", text_style);
 				note_style = ["color: #7ab5e6", "font-size: 10px", "font-family: system-ui"].join(";");
