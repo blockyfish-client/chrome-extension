@@ -49,12 +49,12 @@ async function main() {
 		insertClientVerifiedBadge();
 	}
 }
-main();
+if (window.location.href.match("deeeep.io/u/")) main();
 
 var oldUrl = window.location.href;
 setInterval(function () {
 	if (oldUrl != window.location.href) {
-		main();
+		if (window.location.href.match("deeeep.io/u/")) main();
 		oldUrl = window.location.href;
 	}
 }, 500);
