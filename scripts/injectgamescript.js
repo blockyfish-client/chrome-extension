@@ -50,10 +50,10 @@ const aswpModal = document.getElementById("aswp-modal");
 const aswpCloses = document.getElementsByClassName("aswp-close");
 function toggleAswp() {
 	aswpModal.classList.toggle("aswp-hidden");
-	game.currentScene.myAnimal.setSkin(document.getElementById("aswp-input").value);
+	game.currentScene.myAnimal?.setSkin(document.getElementById("aswp-input").value);
 }
 document.getElementById("aswp-input").addEventListener("input", () => {
-	game.currentScene.myAnimal.setSkin(document.getElementById("aswp-input").value);
+	game.currentScene.myAnimal?.setSkin(document.getElementById("aswp-input").value);
 });
 for (const aswpClose of aswpCloses) {
 	aswpClose.addEventListener("click", () => {
@@ -99,10 +99,10 @@ listForGamemodesWithAimOverlay = [1, 2, 6];
 setInterval(function () {
 	if (game.currentScene != null) {
 		if (game.currentScene.myAnimal != null) {
-			if (game.currentScene.myAnimal._visibleFishLevel == 101) {
-				document.getElementById("aim-overlay").style.transform = "rotate(" + ((game.currentScene.myAnimal.inner.rotation * 180) / Math.PI + 90) + "deg)";
+			if (game.currentScene.myAnimal?._visibleFishLevel == 101) {
+				document.getElementById("aim-overlay").style.transform = "rotate(" + ((game.currentScene.myAnimal?.inner.rotation * 180) / Math.PI + 90) + "deg)";
 			} else {
-				document.getElementById("aim-overlay").style.transform = "rotate(" + ((game.currentScene.myAnimal.inner.rotation * 180) / Math.PI - 90) + "deg)";
+				document.getElementById("aim-overlay").style.transform = "rotate(" + ((game.currentScene.myAnimal?.inner.rotation * 180) / Math.PI - 90) + "deg)";
 			}
 		}
 	}
@@ -111,10 +111,10 @@ function showCtrlOverlay(e) {
 	if (e.ctrlKey || e.altKey) {
 		if (game.currentScene != null) {
 			if (game.currentScene.myAnimal != null) {
-				if (game.currentScene.myAnimal._visibleFishLevel != 101) {
+				if (game.currentScene.myAnimal?._visibleFishLevel != 101) {
 					document.getElementById("ctrl-overlay").style.pointerEvents = "all";
 				} else if (!e.shiftKey) {
-					if (game.currentScene.myAnimal._visibleFishLevel == 101) document.getElementById("ctrl-overlay").style.pointerEvents = "all";
+					if (game.currentScene.myAnimal?._visibleFishLevel == 101) document.getElementById("ctrl-overlay").style.pointerEvents = "all";
 				} else {
 					document.getElementById("ctrl-overlay").style.pointerEvents = "none";
 				}
@@ -141,7 +141,7 @@ window.addEventListener(
 	"keydown",
 	function (e) {
 		showCtrlOverlay(e);
-		if (e.ctrlKey && listForAnimalsWithAimOverlay.includes(game.currentScene.myAnimal._visibleFishLevel) && listForGamemodesWithAimOverlay.includes(game.gameMode) && aim_helper_on) {
+		if (e.ctrlKey && listForAnimalsWithAimOverlay.includes(game.currentScene.myAnimal?._visibleFishLevel) && listForGamemodesWithAimOverlay.includes(game.gameMode) && aim_helper_on) {
 			document.getElementById("aim-overlay").style.display = "block";
 		}
 	},
@@ -151,9 +151,9 @@ window.addEventListener(
 	"click",
 	function (e) {
 		if (e.ctrlKey) {
-			if (e.shiftKey && (game.currentScene.myAnimal._visibleFishLevel == 109 || game.currentScene.myAnimal._visibleFishLevel == 107)) {
+			if (e.shiftKey && (game.currentScene.myAnimal?._visibleFishLevel == 109 || game.currentScene.myAnimal?._visibleFishLevel == 107)) {
 				superShot();
-			} else if (e.shiftKey && game.currentScene.myAnimal._visibleFishLevel != 101) {
+			} else if (e.shiftKey && game.currentScene.myAnimal?._visibleFishLevel != 101) {
 				game.inputManager.handleLongPress(-5);
 			} else {
 				game.inputManager.handleLongPress(5000);
@@ -271,7 +271,7 @@ window.addEventListener("keyup", function (e) {
 				setInterval(function () {
 					if (targetID != null && game.currentScene.entityManager.getEntity(targetID) != null) {
 						click1 = game.currentScene.entityManager.getEntity(targetID).relatedObjects.children[2].speedMultiplierDisplay.visible;
-						c = { x: innerWidth / 2 + game.currentScene.entityManager.getEntity(targetID).position.x - game.currentScene.myAnimal.position._x, y: innerHeight / 2 + game.currentScene.entityManager.getEntity(targetID).position.y - game.currentScene.myAnimal.position._y };
+						c = { x: innerWidth / 2 + game.currentScene.entityManager.getEntity(targetID).position.x - game.currentScene.myAnimal?.position._x, y: innerHeight / 2 + game.currentScene.entityManager.getEntity(targetID).position.y - game.currentScene.myAnimal?.position._y };
 						mapeditor.dispatchEvent(new MouseEvent("pointermove", { clientX: c.x, clientY: c.y }));
 						if (click0 != click1) {
 							click0 = click1;
@@ -322,15 +322,15 @@ if (!aimBotRan) {
 				for (let i = 0; i < game.currentScene.entityManager.animalsList.length; i++) {
 					if (
 						Math.sqrt(
-							(mouseX - innerWidth / 2 - (game.currentScene.entityManager.animalsList[i].position.x - game.currentScene.myAnimal.position._x)) ** 2 + (mouseY - innerHeight / 2 - (game.currentScene.entityManager.animalsList[i].position.y - game.currentScene.myAnimal.position._y)) ** 2
+							(mouseX - innerWidth / 2 - (game.currentScene.entityManager.animalsList[i].position.x - game.currentScene.myAnimal?.position._x)) ** 2 + (mouseY - innerHeight / 2 - (game.currentScene.entityManager.animalsList[i].position.y - game.currentScene.myAnimal?.position._y)) ** 2
 						) < closestEntityDistance &&
 						!game.currentScene.entityManager.animalsList[i].mine &&
-						(game.currentScene.myAnimal.tribeId == null || game.currentScene.myAnimal.tribeId != game.currentScene.entityManager.animalsList[i].tribeId) &&
-						!(game.gameMode == 2 && game.currentScene.entityManager.animalsList[i].nameObject._text.includes(game.currentScene.myAnimal.nameObject._text.slice(0, 10))) &&
+						(game.currentScene.myAnimal?.tribeId == null || game.currentScene.myAnimal?.tribeId != game.currentScene.entityManager.animalsList[i].tribeId) &&
+						!(game.gameMode == 2 && game.currentScene.entityManager.animalsList[i].nameObject._text.includes(game.currentScene.myAnimal?.nameObject._text.slice(0, 10))) &&
 						!whitelistedAimbotAnimalId.includes(game.currentScene.entityManager.animalsList[i].fishLevelData.fishLevel)
 					) {
 						closestEntityDistance = Math.sqrt(
-							(mouseX - innerWidth / 2 - (game.currentScene.entityManager.animalsList[i].position.x - game.currentScene.myAnimal.position._x)) ** 2 + (mouseY - innerHeight / 2 - (game.currentScene.entityManager.animalsList[i].position.y - game.currentScene.myAnimal.position._y)) ** 2
+							(mouseX - innerWidth / 2 - (game.currentScene.entityManager.animalsList[i].position.x - game.currentScene.myAnimal?.position._x)) ** 2 + (mouseY - innerHeight / 2 - (game.currentScene.entityManager.animalsList[i].position.y - game.currentScene.myAnimal?.position._y)) ** 2
 						);
 						closestEntity = game.currentScene.entityManager.animalsList[i].id;
 					}
@@ -348,7 +348,7 @@ if (!aimBotRan) {
 						game.currentScene.uiManager.setTargetId(0);
 						game.currentScene.uiManager.setTargetId(closestEntity);
 					}
-					c = { x: innerWidth / 2 + game.currentScene.entityManager.getEntity(closestEntity).position.x - game.currentScene.myAnimal.position._x, y: innerHeight / 2 + game.currentScene.entityManager.getEntity(closestEntity).position.y - game.currentScene.myAnimal.position._y };
+					c = { x: innerWidth / 2 + game.currentScene.entityManager.getEntity(closestEntity).position.x - game.currentScene.myAnimal?.position._x, y: innerHeight / 2 + game.currentScene.entityManager.getEntity(closestEntity).position.y - game.currentScene.myAnimal?.position._y };
 					mapeditor.dispatchEvent(new MouseEvent("pointermove", { clientX: c.x, clientY: c.y }));
 				} else {
 					game.currentScene.uiManager.setTargetId(0);
@@ -364,7 +364,7 @@ if (!aimBotRan) {
 						game.currentScene.uiManager.setTargetId(0);
 						game.currentScene.uiManager.setTargetId(closestEntity);
 					}
-					c = { x: innerWidth / 2 + game.currentScene.entityManager.getEntity(closestEntity).position.x - game.currentScene.myAnimal.position._x, y: innerHeight / 2 + game.currentScene.entityManager.getEntity(closestEntity).position.y - game.currentScene.myAnimal.position._y };
+					c = { x: innerWidth / 2 + game.currentScene.entityManager.getEntity(closestEntity).position.x - game.currentScene.myAnimal?.position._x, y: innerHeight / 2 + game.currentScene.entityManager.getEntity(closestEntity).position.y - game.currentScene.myAnimal?.position._y };
 					mapeditor.dispatchEvent(new MouseEvent("pointermove", { clientX: c.x, clientY: c.y }));
 				}
 			}
