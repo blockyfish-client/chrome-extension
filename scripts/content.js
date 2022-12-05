@@ -309,12 +309,14 @@ function injectScript(file, tag) {
 // CHECK FOR GAME START
 let scriptExecuted = false;
 document.querySelector("button.play").addEventListener("click", () => {
+	console.log("Play button clicked");
 	if (!document.querySelector(".playing")) scriptExecuted = false;
 	if (scriptExecuted) return;
 	const openObserver = new MutationObserver(() => {
 		if (document.contains(document.querySelector(".playing"))) {
 			openObserver.disconnect();
 			scriptExecuted = true;
+			console.log("Injecting scripts...");
 			injectScript(chrome.runtime.getURL("scripts/injectgamescript.js"), "body");
 		}
 	});

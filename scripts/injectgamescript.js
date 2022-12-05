@@ -185,8 +185,8 @@ window.addEventListener("focus", () => {
 // SHOW ID
 setInterval(() => {
 	if (
-		document.querySelector("#app > div.overlay > div.top-right > div.flex.flex-col > div.info.mb-1.mr-1").childElementCount != 5 ||
-		document.querySelector("#app > div.overlay > div.top-right > div.flex.flex-col > div.info.mb-1.mr-1 > div:nth-child(5) > span").innerText != "ID: " + game.currentScene.myAnimal.id
+		document.querySelector("#app > div.overlay > div.top-right > div.flex.flex-col > div.info.mb-1.mr-1")?.childElementCount != 5 ||
+		document.querySelector("#app > div.overlay > div.top-right > div.flex.flex-col > div.info.mb-1.mr-1 > div:nth-child(5) > span").innerText != "ID: " + game.currentScene.myAnimal?.id
 	) {
 		if (document.querySelector("#app > div.overlay > div.top-right > div.flex.flex-col > div.info.mb-1.mr-1 > div:nth-child(4)") != null) {
 			document.querySelector("#app > div.overlay > div.top-right > div.flex.flex-col > div.info.mb-1.mr-1 > div:nth-child(4)").remove();
@@ -203,8 +203,8 @@ setInterval(() => {
 		var id_text = document.querySelector("#app > div.overlay > div.top-right > div.flex.flex-col > div.info.mb-1.mr-1 > div:nth-child(5) > span");
 		id_text.innerText = "ID: null";
 	}
-	if (game.currentScene != null) {
-		id_text.innerText = "ID: " + game.currentScene.myAnimal.id;
+	if (game.currentScene != null && id_text) {
+		id_text.innerText = "ID: " + game.currentScene.myAnimal?.id;
 	}
 }, 5000);
 
